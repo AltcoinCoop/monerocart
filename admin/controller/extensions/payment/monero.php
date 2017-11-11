@@ -3,19 +3,17 @@ class ControllerExtensionPaymentMonero extends Controller
 {
     private $error = array();
     private $settings = array();
-    //Config page
     public function index()
     {
         $this->load->language('extension/payment/monero');
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('setting/setting');
-        //new config
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+        
+        if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
             $this->model_setting_setting->editSetting('monero', $this->request->post);
-            $this->session->data['success'] = $this->language->get('text_success');
+            $this->session->data['success'] = "Success! Welcome to Monero!";
             $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
         }
-        //language data
         $data['heading_title'] = $this->language->get('heading_title');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
@@ -26,23 +24,21 @@ class ControllerExtensionPaymentMonero extends Controller
         
         
         $data['monero_address_text'] = $this->language->get('monero_address_text');
-        $data['button_save'] = $this->language->get('button_save');
+        $data['button_save'] = "save";
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
         $data['help_total'] = $this->language->get('help_total');
         //Errors
         $data['error_warning'] = isset($this->error['warning']) ? $this->error['warning'] : '';
         
-        //Zones, order statuses
-        $this->load->model('localisation/geo_zone');
-        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-        $this->load->model('localisation/order_status');
-        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+        
        
        // Values for Settings
-       
+        $data['monero_address'] = isset($this->request->post['monero_address']) ?
             $this->request->post['monero_address'] : $this->config->get('monero_address');
-        
+         $data['monero_status'] = isset($this->request->post['monero_status']) ?
+            $this->request->post['monero_status'] : $this->config->get('monero_status');
+
        
        
         $data['breadcrumbs'] = array();
@@ -64,15 +60,16 @@ class ControllerExtensionPaymentMonero extends Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
         $this->response->setOutput($this->load->view('extension/payment/monero.tpl', $data));
-    }
-  
+    } //index
+    //validate
     private function validate()
     {
         //permisions
         if (!$this->user->hasPermission('modify', 'extension/payment/monero')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
-               
+        return true;
+       
     }
     public function install()
     {
