@@ -38,6 +38,10 @@ class ControllerExtensionPaymentMonero extends Controller
             $this->request->post['monero_address'] : $this->config->get('monero_address');
          $data['monero_status'] = isset($this->request->post['monero_status']) ?
             $this->request->post['monero_status'] : $this->config->get('monero_status');
+         $data['monero_wallet_rpc_host'] = isset($this->request->post['monero_wallet_rpc_host']) ?
+            $this->request->post['monero_wallet_rpc_host'] : $this->config->get('moenro_wallet_rpc_host');
+             $data['monero_wallet_rpc_port'] = isset($this->request->post['monero_wallet_rpc_port']) ?
+            $this->request->post['monero_wallet_rpc_port'] : $this->config->get('monero_wallet_rpc_port');
 
        
        
@@ -60,13 +64,14 @@ class ControllerExtensionPaymentMonero extends Controller
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
         $this->response->setOutput($this->load->view('extension/payment/monero.tpl', $data));
-    } //index
-    //validate
+    }
+   
     private function validate()
     {
-        //permisions
+        
         if (!$this->user->hasPermission('modify', 'extension/payment/monero')) {
             $this->error['warning'] = $this->language->get('error_permission');
+            return false;
         }
         return true;
        
