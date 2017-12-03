@@ -54,7 +54,9 @@ class ControllerExtensionPaymentMonero extends Controller {
         }
 	}
 	
-	public function 
+	public function make_integrated_address(){
+		$host = "localhost";
+	}
 	
 	/*
 		Here function for prices, integrated address, connection between opencart and wallet rpc
