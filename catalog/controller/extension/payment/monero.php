@@ -29,13 +29,19 @@ class ControllerExtensionPaymentMonero extends Controller {
 	
 	public function changeto($order_total, $currency){
 		$xmr_live_price = $this->xmrliveprice($currency);
-		$amount_in_xmr = $order_total / $xmr_live_price;
-		retrun $amount_in_xmr;
+		$amount_in_xmr = $order_total / $xmr_live_price ;
+		return $amount_in_xmr;
 	}
 	
 	public function xmrliveprice($currency){
-		$xmr_price = file_get_contents("https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,CAD,INR,GBP&extraParams=monero_opencart");
-		$price = json_decode($xmr_price, TRUE);
+		$url = "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD,EUR,CAD,INR,GBP&extraParams=monero_opencart";
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, false);
+		$data = curl_exec($curl);
+		curl_close($curl);
+		$price = json_decode($data, TRUE);
 		
         switch ($currency) {
             case 'USD':
