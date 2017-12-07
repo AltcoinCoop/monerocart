@@ -51,21 +51,20 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-monero-wallet-rpc"><span data-toggle="tooltip" title="Monero Wallet RPC">Monero Wallet RPC Host</span></label>
+                        <label class="col-sm-2 control-label" for="input-monero-wallet-rpc-host"><span data-toggle="tooltip" title="Monero Wallet RPC">Monero Wallet RPC Host</span></label>
                         <div class="col-sm-10">
-                            <input type="text" name="monero_wallet_rpc_host" value="localhost" placeholder="localhost" id="input-total" class="form-control" />
+                            <input type="text" name="monero_wallet_rpc_host" value="<?php echo $monero_wallet_rpc_host ?>" placeholder="<?php echo $monero_wallet_rpc_host ?>" id="input-total" class="form-control" />
                         </div>
                     </div>
 
 <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-monero-address"><span data-toggle="tooltip" title="Monero Address">Monero Wallet RPC Port</span></label>
+                        <label class="col-sm-2 control-label" for="input-monero-wallet-port"><span data-toggle="tooltip" title="Monero Wallet RPC port">Monero Wallet RPC Port</span></label>
                         <div class="col-sm-10">
-                            <input type="text" name="monero_wallet_rpc_port" value="18081" placeholder="18082" id="input-total" class="form-control" />
+                            <input type="text" name="monero_wallet_rpc_port" value="<?php echo $monero_wallet_rpc_port ?>" placeholder="18082" id="input-total" class="form-control" />
                         </div>
                     </div>
                     
 
-                   
                 </form>
             </div>
         </div>
