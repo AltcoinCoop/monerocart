@@ -39,7 +39,7 @@ class ControllerExtensionPaymentMonero extends Controller
          $data['monero_status'] = isset($this->request->post['monero_status']) ?
             $this->request->post['monero_status'] : $this->config->get('monero_status');
          $data['monero_wallet_rpc_host'] = isset($this->request->post['monero_wallet_rpc_host']) ?
-            $this->request->post['monero_wallet_rpc_host'] : $this->config->get('moenro_wallet_rpc_host');
+            $this->request->post['monero_wallet_rpc_host'] : $this->config->get('monero_wallet_rpc_host');
              $data['monero_wallet_rpc_port'] = isset($this->request->post['monero_wallet_rpc_port']) ?
             $this->request->post['monero_wallet_rpc_port'] : $this->config->get('monero_wallet_rpc_port');
 
