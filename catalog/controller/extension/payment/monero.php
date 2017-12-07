@@ -4,18 +4,19 @@ class ControllerExtensionPaymentMonero extends Controller {
     private $payment_module_name  = 'monero';
 	public function index() {
         	
-    		$this->load->model('payment/monero');
+    		
 		$this->load->model('checkout/order');
 		$order_id = $this->session->data['order_id'];
 		$order = $this->model_checkout_order->getOrder($order_id);
 		$current_default_currency = $this->config->get('config_currency');
 		$order_total = $order['total'];
-		$order_currency = $order['currency'];
-		$amount_xmr = $this->changeto($order_total, $currency);
+		$order_currency = $this->session->data['currency'];
+		$amount_xmr = $this->changeto($order_total, $order_currency);
 		
 		$data['amount_xmr'] = $amount_xmr;
-		$data['integrated_address'] = "";
-		
+		$data['integrated_address'] = $this->config->get("monero_address");
+		$address = $this->config->get("monero_address");
+		$data['url'] = "monero:".$address."";
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/monero.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/monero.tpl';
 		} else {
@@ -41,6 +42,7 @@ class ControllerExtensionPaymentMonero extends Controller {
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		$data = curl_exec($curl);
 		curl_close($curl);
+			$xmr_price = "";
 		$price = json_decode($data, TRUE);
 		
         switch ($currency) {
@@ -63,11 +65,12 @@ class ControllerExtensionPaymentMonero extends Controller {
 	public function make_integrated_address(){
 		    $this->load->library('jsonrpclibrary');
 		    $this->load->library('monero');
-		$host = $this->config->get("monero_wallet_rpc_host");
-		$port = $this->config->get("monero_wallet_rpc_port");
+		/* TODO REMOVE ME */
+		    $host = "";
+		    $port = "";
 		$monero = new Monero_Payments($host, $port);
 		$integrated_address = $monero->make_integrated_address();
-		return $integrated_address;
+		return $integrated_address; 
 	}
 	
 	/*
