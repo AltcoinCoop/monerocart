@@ -57,12 +57,14 @@
                         </div>
                     </div>
 
-<div class="form-group">
+                    <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-monero-wallet-port"><span data-toggle="tooltip" title="Monero Wallet RPC port">Monero Wallet RPC Port</span></label>
                         <div class="col-sm-10">
                             <input type="text" name="monero_wallet_rpc_port" value="<?php echo $monero_wallet_rpc_port ?>" placeholder="18082" id="input-total" class="form-control" />
                         </div>
                     </div>
+                    
+                    
                     
 
                 </form>
