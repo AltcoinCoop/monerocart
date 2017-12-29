@@ -65,9 +65,9 @@ class ControllerExtensionPaymentMonero extends Controller {
 	public function make_integrated_address(){
 		    $this->load->library('jsonrpclibrary');
 		    $this->load->library('monero');
-		/* TODO REMOVE ME */
-		    $host = "";
-		    $port = "";
+	
+		    $host = $this->config->get('monero_wallet_rpc_host');
+		    $port = $this->config->get('monero_wallet_rpc_port');
 		$monero = new Monero_Payments($host, $port);
 		$integrated_address = $monero->make_integrated_address();
 		return $integrated_address; 
