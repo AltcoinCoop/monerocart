@@ -6,24 +6,24 @@ class ControllerExtensionPaymentMonero extends Controller
     public function index()
     {
         $this->load->language('extension/payment/monero');
-        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle('Monero Payment Gateway');
         $this->load->model('setting/setting');
         
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
             $this->model_setting_setting->editSetting('monero', $this->request->post);
             $this->session->data['success'] = "Success! Welcome to Monero!";
-            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+            $this->response->redirect($this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'], true));
         }
-        $data['heading_title'] = $this->language->get('heading_title');
-        $data['text_enabled'] = $this->language->get('text_enabled');
-        $data['text_disabled'] = $this->language->get('text_disabled');
+        $data['heading_title'] = 'Monero Payment Gateway';
+        $data['text_enabled'] = 'enabled';
+        $data['text_disabled'] = 'disabled';
         $data['text_all_zones'] = $this->language->get('text_all_zones');
-        $data['text_yes'] = $this->language->get('text_yes');
-        $data['text_no'] = $this->language->get('text_no');
-        $data['text_edit'] = $this->language->get('text_edit');
+        $data['text_yes'] = 'Yes';
+        $data['text_no'] = 'No';
+        $data['text_edit'] = 'Edit';
         
         
-        $data['monero_address_text'] = $this->language->get('monero_address_text');
+        $data['monero_address_text'] = 'Monero Address';
         $data['button_save'] = "save";
         $data['button_cancel'] = $this->language->get('button_cancel');
         $data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
@@ -42,28 +42,27 @@ class ControllerExtensionPaymentMonero extends Controller
             $this->request->post['monero_wallet_rpc_host'] : $this->config->get('monero_wallet_rpc_host');
              $data['monero_wallet_rpc_port'] = isset($this->request->post['monero_wallet_rpc_port']) ?
             $this->request->post['monero_wallet_rpc_port'] : $this->config->get('monero_wallet_rpc_port');
-
        
        
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], true)
+            'text' => 'Monero Payment Gateway',
+            'href' => $this->url->link('common/home', 'user_token=' . $this->session->data['user_token'], true)
         );
         $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_extension'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', true)
+            'text' => 'Monero Payment Gateway',
+            'href' => $this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', true)
         );
         $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/payment/monero', 'token=' . $this->session->data['token'], true)
+            'text' => 'Monero Payment Gateway',
+            'href' => $this->url->link('extension/payment/monero', 'user_token=' . $this->session->data['user_token'], true)
         );
-        $data['action'] = $this->url->link('extension/payment/monero', 'token=' . $this->session->data['token'], true);
-        $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+        $data['action'] = $this->url->link('extension/payment/monero', 'user_token=' . $this->session->data['user_token'], true);
+        $data['cancel'] = $this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'], true);
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
-        $this->response->setOutput($this->load->view('extension/payment/monero.tpl', $data));
+        $this->response->setOutput($this->load->view('extension/payment/monero', $data));
     }
    
     private function validate()
@@ -81,7 +80,12 @@ class ControllerExtensionPaymentMonero extends Controller
         $this->load->model('extension/payment/monero');
         $this->load->model('setting/setting');
         
-        $this->model_setting_setting->editSetting('monero', $this->settings);
+        $settings['monero_address'] = "";
+        $settings['monero_wallet_rpc_port'] = "18082";
+        $settings['monero_wallet_rpc_host'] = "localhost";
+
+        
+        $this->model_setting_setting->editSetting('monero', $settings);
         $this->model_extension_payment_monero->createDatabaseTables();
     }
     public function uninstall()
