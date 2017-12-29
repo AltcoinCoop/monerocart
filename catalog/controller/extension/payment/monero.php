@@ -14,7 +14,7 @@ class ControllerExtensionPaymentMonero extends Controller {
 		$amount_xmr = $this->changeto($order_total, $order_currency);
 		
 		$data['amount_xmr'] = $amount_xmr;
-		$data['integrated_address'] = $this->config->get("monero_address");
+		$data['integrated_address'] = $this->make_integrated_address();
 		$address = $this->config->get("monero_address");
 		$data['url'] = "monero:".$address."";
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/monero.tpl')) {
