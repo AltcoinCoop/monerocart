@@ -12,7 +12,7 @@ class ControllerExtensionPaymentMonero extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
             $this->model_setting_setting->editSetting('monero', $this->request->post);
             $this->session->data['success'] = "Success! Welcome to Monero!";
-            $this->response->redirect($this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'], true));
+            $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'], true));
         }
         $data['heading_title'] = 'Monero Payment Gateway';
         $data['text_enabled'] = 'enabled';
