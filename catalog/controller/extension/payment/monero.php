@@ -17,11 +17,7 @@ class ControllerExtensionPaymentMonero extends Controller {
 		$data['integrated_address'] = $this->config->get("monero_address");
 		$address = $this->config->get("monero_address");
 		$data['url'] = "monero:".$address."";
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/monero.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/monero.tpl';
-		} else {
-			$this->template = 'default/template/payment/monero.tpl';
-		}	
+			
 		        return $this->load->view('extension/payment/monero', $data);
 
 		
