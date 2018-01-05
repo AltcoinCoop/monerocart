@@ -2,8 +2,6 @@
 class ModelExtensionPaymentMonero extends Model {
   	public function getMethod($address, $total) {
 		
-		
-		
       		$method_data = array( 
         		'code'         	=> 'monero',
         		'title'      	=> 'Monero Payment Gateway',
